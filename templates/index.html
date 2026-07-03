@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Generator AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-dark navbar-expand-lg bg-dark">
+        <div class="container-lg">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-image"></i> Image Generator AI
+            </a>
+        </div>
+    </nav>
+
+    <div class="container-lg py-5">
+        <div class="row">
+            <!-- Input Section -->
+            <div class="col-lg-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <h5 class="card-title mb-4">Generate Image</h5>
+                        
+                        <div class="mb-3">
+                            <label for="promptInput" class="form-label">Image Prompt</label>
+                            <textarea 
+                                class="form-control form-control-lg" 
+                                id="promptInput" 
+                                rows="5" 
+                                placeholder="Describe the image you want to generate... (e.g., 'A futuristic city at sunset with flying cars')"
+                            ></textarea>
+                            <small class="text-muted d-block mt-2">
+                                Max 4000 characters. Be descriptive for better results!
+                            </small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="sizeSelect" class="form-label">Image Size</label>
+                            <select class="form-select form-select-lg" id="sizeSelect">
+                                <option value="1024x1024" selected>1024x1024 (Square)</option>
+                                <option value="1792x1024">1792x1024 (Landscape)</option>
+                                <option value="1024x1792">1024x1792 (Portrait)</option>
+                            </select>
+                        </div>
+
+                        <button 
+                            class="btn btn-primary btn-lg w-100" 
+                            id="generateBtn"
+                            onclick="generateImage()"
+                        >
+                            <span id="btnText">Generate Image</span>
+                            <span id="btnSpinner" class="spinner-border spinner-border-sm ms-2" style="display: none;"></span>
+                        </button>
+
+                        <div id="errorAlert" class="alert alert-danger mt-3" style="display: none;">
+                            <strong id="errorMessage"></strong>
+                        </div>
+
+                        <div id="successAlert" class="alert alert-success mt-3" style="display: none;">
+                            <strong id="successMessage"></strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Card -->
+                <div class="card mt-3 bg-light">
+                    <div class="card-body">
+                        <h6 class="card-title">Tips for Better Results:</h6>
+                        <ul class="small mb-0">
+                            <li>Be specific and descriptive</li>
+                            <li>Include style references (e.g., "in the style of Van Gogh")</li>
+                            <li>Specify lighting and mood</li>
+                            <li>Mention composition details</li>
+                            <li>Include colors and textures</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Output Section -->
+            <div class="col-lg-6">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <h5 class="card-title mb-4">Generated Image</h5>
+                        
+                        <div id="imageContainer" class="text-center">
+                            <div class="placeholder-image">
+                                <div class="display-1 text-muted mb-3">
+                                    <i class="bi bi-image"></i>
+                                </div>
+                                <p class="text-muted">
+                                    Your generated image will appear here
+                                </p>
+                            </div>
+                        </div>
+
+                        <div id="imageActions" style="display: none;" class="mt-3">
+                            <button 
+                                class="btn btn-success w-100" 
+                                id="downloadBtn"
+                                onclick="downloadImage()"
+                            >
+                                <i class="bi bi-download"></i> Download Image
+                            </button>
+                        </div>
+
+                        <div id="generatedPromptContainer" style="display: none;" class="mt-3">
+                            <label class="form-label text-muted small">Used Prompt:</label>
+                            <p id="generatedPrompt" class="text-muted small bg-light p-2 rounded"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container-lg text-center">
+            <p class="mb-0">
+                <small>Image Generator AI • Powered by OpenAI DALL-E 3</small>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
